@@ -5,12 +5,13 @@ import java.util.Map;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 
 public class HomePage extends AbstractPage{
-
+	Actions action;
 	WebDriver driver;
 	
 	/* Flights Form Elements */
@@ -64,6 +65,7 @@ public class HomePage extends AbstractPage{
 		super(driver);
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
+		action = new Actions(driver);
 		waitForPageToLoad();
 	}
 	
@@ -153,7 +155,11 @@ public class HomePage extends AbstractPage{
 		passengersDropdown.click();
 	}
 	
+	/*
+	 * Used double click, because sometime's only overlay was appearing after click
+	 * and button was focused but not clicked
+	 */
 	public void clickContinueButton(){
-		flightsFormSubmitButton.click();
+		action.doubleClick(flightsFormSubmitButton).perform();
 	}
 }
